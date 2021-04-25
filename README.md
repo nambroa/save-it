@@ -1,0 +1,1 @@
+- Guide used for initial project setup: https://davebaker.me/2020/07/19/setting-up-django-project-with-poetry/# save-it
