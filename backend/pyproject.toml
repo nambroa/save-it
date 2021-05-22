@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "saveit"
+name = "backend"
 version = "0.1.0"
 description = ""
 authors = ["nambroa <ambroanicolas@gmail.com>"]

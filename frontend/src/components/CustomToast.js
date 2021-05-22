@@ -1,10 +1,10 @@
 import { Toast } from 'react-bootstrap';
 
-const TaskCreatedToast = ({ show, handleClose }) => {
+const CustomToast = ({ show, handleClose, headerMessage, backgroundColor }) => {
   return (
     <div>
       <Toast
-        delay={2500}
+        delay={4000}
         onClose={() => handleClose()}
         autohide
         show={show}
@@ -12,14 +12,13 @@ const TaskCreatedToast = ({ show, handleClose }) => {
           position: 'absolute',
           top: 0,
           right: 0,
-          backgroundColor: 'green',
-        }}
-      >
+          backgroundColor: `${backgroundColor}`,
+        }}>
         <Toast.Header>
-          <strong className="mr-auto">Task Created Successfully</strong>
+          <strong className='mr-auto'>{headerMessage}</strong>
         </Toast.Header>
       </Toast>
     </div>
   );
 };
-export default TaskCreatedToast;
+export default CustomToast;
