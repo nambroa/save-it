@@ -1,1 +1,7 @@
-- Guide used for initial project setup: https://davebaker.me/2020/07/19/setting-up-django-project-with-poetry/# save-it
+# How to run Save It locally
+
+- Go into the `backend` directory
+- - Run the command `python3 manage.py runserver`
+- Go into the `frontend` directory
+- - Run the command `npm run install`
+- - Run the command `npm run start`
