@@ -1,4 +1,4 @@
-import { CREATE_TASK } from '../actions/actionTypes';
+import { CREATE_TASK } from '../../actions/tasks/actionTypes';
 
 const createTaskReducer = (state = {}, action) => {
   if (action.type === CREATE_TASK) {

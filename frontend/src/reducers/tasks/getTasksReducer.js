@@ -1,4 +1,4 @@
-import { GET_TASKS } from '../actions/actionTypes';
+import { GET_TASKS } from '../../actions/tasks/actionTypes';
 
 const getTasksReducer = (state = [], action) => {
   if (action.type === GET_TASKS) {

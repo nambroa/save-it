@@ -9,7 +9,7 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
     creation_date = models.DateField(auto_now_add=True)
     deadline = models.DateField()
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name='tasks', blank=True)
 
     def __str__(self):
         return self.title

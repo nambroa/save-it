@@ -1,4 +1,4 @@
-import { DELETE_TASK } from '../actions/actionTypes';
+import { DELETE_TASK } from '../../actions/tasks/actionTypes';
 
 const deleteTaskReducer = (state = {}, action) => {
   if (action.type === DELETE_TASK) {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
-import { sortTasks } from '../actions';
+import { sortTasks } from '../actions/tasks';
 
 const TaskSorter = ({ sortTasks }) => {
   return (

@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
 import { PencilSquare, XCircle, CheckCircle, SlashCircle } from 'react-bootstrap-icons';
 
-import { getTasks, deleteTask, completeTask } from '../actions';
+import { getTasks, deleteTask, completeTask } from '../actions/tasks';
 import EditTaskModal from './EditTaskModal';
 import CustomToast from './CustomToast';
+import TagsContainer from './TagsContainer/TagsContainer';
 
 // For data loading into a component, its good to remember
 // Call action creator from componentDidMount, and the creator inside runs the api request
@@ -62,6 +63,9 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, tasks }) => {
         </td>
         <td>{new Date(task.creation_date).toLocaleDateString()}</td>
         <td>{task.title}</td>
+        <td>
+          <TagsContainer taskTags={task.tags}></TagsContainer>
+        </td>
         <td>{new Date(task.deadline).toLocaleDateString()}</td>
         <td>{String(task.completed)}</td>
       </tr>
@@ -86,6 +90,7 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, tasks }) => {
             <th>Actions</th>
             <th>Created on</th>
             <th>Title</th>
+            <th>Tags</th>
             <th>Deadline</th>
             <th>Completed</th>
           </tr>

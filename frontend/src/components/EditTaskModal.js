@@ -1,6 +1,6 @@
 import { Button, Form, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { editTask } from '../actions';
+import { editTask } from '../actions/tasks';
 
 // We pass the action creator createTask via redux's global state, and the rest of the params via the App's state since the rest of our application doesn't need to know those details.
 const EditTaskModal = ({ show, handleClose, task, toggleToast, editTask }) => {

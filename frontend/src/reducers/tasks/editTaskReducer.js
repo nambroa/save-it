@@ -1,4 +1,4 @@
-import { EDIT_TASK } from '../actions/actionTypes';
+import { EDIT_TASK } from '../../actions/tasks/actionTypes';
 
 const editTaskReducer = (state = {}, action) => {
   if (action.type === EDIT_TASK) {
