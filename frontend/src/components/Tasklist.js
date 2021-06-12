@@ -4,6 +4,7 @@ import { Table, Button } from 'react-bootstrap';
 import { PencilSquare, XCircle, CheckCircle, SlashCircle } from 'react-bootstrap-icons';
 
 import { getTasks, deleteTask, completeTask } from '../actions/tasks';
+import { getTags } from '../actions/tags';
 import EditTaskModal from './EditTaskModal';
 import CustomToast from './CustomToast';
 import TagsContainer from './TagsContainer/TagsContainer';
@@ -14,18 +15,23 @@ import TagsContainer from './TagsContainer/TagsContainer';
 // Some reducer sees the actions, returns the data off the 'payload'
 // Since we generated a new state object, react-redux causes our React app to be rerendered
 
-// GetTasks is an action creator, received via the connect function
-const Tasklist = ({ getTasks, deleteTask, completeTask, tasks }) => {
+const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, tags }) => {
   const [toggleEditTaskModal, setToggleEditTaskModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState({});
   var [toggleCustomToast, setToggleCustomToast] = useState(false);
   var [headerMessage, setHeaderMessage] = useState('');
   var [backgroundColor, setBackgroundColor] = useState('green');
-
   useEffect(() => {
     // This will be translated to store.dispatch(getTasks()) inside of redux.
     getTasks(toggleToast);
-  }, [getTasks]);
+    // Warning below needed since I don't want to call the action creator in each rerender.
+    // (And it would otherwise do so, since the function is an object and thus changes every rerender)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    getTags(toggleToast);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggleToast = (backgroundColor, headerMessage) => {
     setBackgroundColor(backgroundColor);
@@ -38,7 +44,7 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, tasks }) => {
     setToggleEditTaskModal(true);
   };
 
-  const renderTasks = (tasks, setSelectedTask, setToggleEditTaskModal, deleteTask, toggleToast, completeTask) => {
+  const renderTasks = (setSelectedTask, setToggleEditTaskModal, deleteTask, toggleToast, completeTask) => {
     return tasks.map(task => (
       <tr key={task.id}>
         <td style={{ width: '13%' }}>
@@ -64,7 +70,10 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, tasks }) => {
         <td>{new Date(task.creation_date).toLocaleDateString()}</td>
         <td>{task.title}</td>
         <td>
-          <TagsContainer taskTags={task.tags}></TagsContainer>
+          <TagsContainer
+            taskTags={task.tags}
+            task={task}
+            toggleEditTaskToast={() => toggleToast('green', 'Task Edited Successfully')}></TagsContainer>
         </td>
         <td>{new Date(task.deadline).toLocaleDateString()}</td>
         <td>{String(task.completed)}</td>
@@ -95,9 +104,7 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, tasks }) => {
             <th>Completed</th>
           </tr>
         </thead>
-        <tbody>
-          {renderTasks(tasks, setSelectedTask, setToggleEditTaskModal, deleteTask, toggleToast, completeTask)}
-        </tbody>
+        <tbody>{renderTasks(setSelectedTask, setToggleEditTaskModal, deleteTask, toggleToast, completeTask)}</tbody>
       </Table>
     </div>
   );
@@ -108,11 +115,11 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, tasks }) => {
 const mapStateToProps = (state, ownProps) => {
   var tasks = []; // First time the reducer gets called, getTasks.data will be empty
   if (state.getTasks.data) {
-    tasks = state.getTasks.data;
+    tasks = state.getTasks.data; // state.getTasks is called that way because the reducer is called getTasks in combineReducers
   }
-  return { tasks }; // state.getTasks is called that way because the reducer is called getTasks in combineReducers.
+  return { tasks };
 };
 
 // you give it a function to access data from the store and give it to the component
 // and another object with functions that will send data TO the store
-export default connect(mapStateToProps, { getTasks, deleteTask, completeTask })(Tasklist);
+export default connect(mapStateToProps, { getTasks, deleteTask, completeTask, getTags })(Tasklist);

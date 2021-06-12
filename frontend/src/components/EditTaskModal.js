@@ -1,6 +1,7 @@
 import { Button, Form, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { editTask } from '../actions/tasks';
+import { formatTask } from '../utils';
 
 // We pass the action creator createTask via redux's global state, and the rest of the params via the App's state since the rest of our application doesn't need to know those details.
 const EditTaskModal = ({ show, handleClose, task, toggleToast, editTask }) => {
@@ -11,7 +12,8 @@ const EditTaskModal = ({ show, handleClose, task, toggleToast, editTask }) => {
       event.stopPropagation();
     } else {
       const formElements = form.elements;
-      editTask(formElements[0].value, formElements[1].value, formElements[2].value, taskId, toggleToast);
+      const editedTask = formatTask(formElements[0].value, formElements[1].value, formElements[2].value, taskId, false);
+      editTask(editedTask, toggleToast);
       handleClose();
     }
   };
@@ -51,8 +53,7 @@ const EditTaskModal = ({ show, handleClose, task, toggleToast, editTask }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { show, handleClose, task, toggleToast } = ownProps;
-  return { show, handleClose, task, toggleToast };
+  return {};
 };
 
-export default connect(mapStateToProps, { editTask: editTask })(EditTaskModal);
+export default connect(mapStateToProps, { editTask })(EditTaskModal);

@@ -4,6 +4,7 @@ import createTaskReducer from './tasks/createTaskReducer';
 import editTaskReducer from './tasks/editTaskReducer';
 import deleteTaskReducer from './tasks/deleteTaskReducer';
 import getTagsReducer from './tags/getTagsReducer';
+import createTagReducer from './tags/createTagReducer';
 
 export default combineReducers({
   getTasks: getTasksReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   editTask: editTaskReducer,
   deleteTask: deleteTaskReducer,
   getTags: getTagsReducer,
+  createTag: createTagReducer,
 });

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 
 from save_it.models.tag import Tag
 from save_it.models.task import Task
@@ -11,7 +12,7 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class TaskSerializer(serializers.ModelSerializer):
+class TaskSerializer(WritableNestedModelSerializer):
     tags = TagSerializer(many=True)
 
     class Meta:

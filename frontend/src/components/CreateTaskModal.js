@@ -51,11 +51,7 @@ const CreateTaskModal = ({ createTask, show, handleClose, toggleTaskCreatedToast
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    show: ownProps.show,
-    handleClose: ownProps.handleClose,
-    toggleTaskCreatedToast: ownProps.toggleTaskCreatedToast,
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, { createTask: createTask })(CreateTaskModal);

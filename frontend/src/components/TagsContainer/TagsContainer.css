@@ -75,6 +75,7 @@
   /* match tag layout */
   padding: 7px 2px;
   margin-bottom: 6px;
+  z-index: 1;
 
   /* prevent autoresize overflowing the container */
   max-width: 100%;
