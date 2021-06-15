@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { createTask } from '../actions/tasks';
 
 // We pass the action creator createTask via redux's global state, and the rest of the params via the App's state since the rest of our application doesn't need to know those details.
-const CreateTaskModal = ({ createTask, show, handleClose, toggleTaskCreatedToast }) => {
+const CreateTaskModal = ({ createTask, show, handleClose, toggleToast }) => {
   const handleSubmit = event => {
     const form = event.currentTarget;
     event.preventDefault(); // Default submit just refreshes the page, so we prevent it.
 
     const formElements = form.elements;
-    createTask(formElements[0].value, formElements[1].value, formElements[2].value, toggleTaskCreatedToast);
+    createTask(formElements[0].value, formElements[1].value, formElements[2].value, toggleToast);
 
     handleClose();
   };
@@ -51,7 +51,7 @@ const CreateTaskModal = ({ createTask, show, handleClose, toggleTaskCreatedToast
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return {};
+  return { toggleToast: state.toggleToast };
 };
 
 export default connect(mapStateToProps, { createTask: createTask })(CreateTaskModal);

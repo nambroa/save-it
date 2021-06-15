@@ -37,8 +37,8 @@ export const getTags = toggleToast => async (dispatch, getState) => {
 //     dispatch({ type: CREATE_TASK, payload: payload });
 // };
 
-export const createTag = name => async (dispatch, getState) => {
-  const tag = { name: name };
+export const createTag = (tag, task) => async (dispatch, getState) => {
+  tag.tasks = [task.id];
   var payload = {};
   const response = await axios
     .post('/api/tags/', tag)

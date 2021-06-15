@@ -5,6 +5,7 @@ import editTaskReducer from './tasks/editTaskReducer';
 import deleteTaskReducer from './tasks/deleteTaskReducer';
 import getTagsReducer from './tags/getTagsReducer';
 import createTagReducer from './tags/createTagReducer';
+import sendToastToStoreReducer from './toasts/sendToastToStoreReducer';
 
 export default combineReducers({
   getTasks: getTasksReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   deleteTask: deleteTaskReducer,
   getTags: getTagsReducer,
   createTag: createTagReducer,
+  toggleToast: sendToastToStoreReducer,
 });

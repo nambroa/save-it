@@ -1,0 +1,1 @@
+export const SEND_TOAST_TO_STORE = 'SEND_TOAST_TO_STORE';

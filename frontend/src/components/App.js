@@ -13,16 +13,12 @@ const App = () => {
   var [toggleTaskCreatedToast, setToggleTaskCreatedToast] = useState(false);
   return (
     <div>
+      <CustomToast></CustomToast>
       <CreateTaskModal
         show={toggleCreateTaskModal}
         handleClose={() => setToggleCreateTaskModal(false)}
         toggleTaskCreatedToast={() => setToggleTaskCreatedToast(true)}
       />
-      <CustomToast
-        show={toggleTaskCreatedToast}
-        handleClose={() => setToggleTaskCreatedToast(false)}
-        headerMessage='Task Created Successfully'
-        backgroundColor='green'></CustomToast>
       <div style={{ display: 'flex' }}>
         <Button size='lg' variant='success' onClick={() => setToggleCreateTaskModal(true)}>
           Create Task

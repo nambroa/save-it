@@ -1,6 +1,6 @@
 import { GET_TASKS } from '../../actions/tasks/actionTypes';
 
-const getTasksReducer = (state = [], action) => {
+const getTasksReducer = (state = {}, action) => {
   if (action.type === GET_TASKS) {
     return action.payload;
   }

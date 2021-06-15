@@ -30,7 +30,7 @@ export const sortTasks = orderingParameter => async (dispatch, getState) => {
     .catch(err => console.log(err));
 };
 
-export const createTask = (title, description, deadline, toggleTaskCreatedToast) => async (dispatch, getState) => {
+export const createTask = (title, description, deadline, toggleToast) => async (dispatch, getState) => {
   const task = {
     title: title,
     description: description,
@@ -43,7 +43,7 @@ export const createTask = (title, description, deadline, toggleTaskCreatedToast)
     .post('/api/tasks/', task)
     .then(function(result) {
       const payload = { data: {} };
-      toggleTaskCreatedToast();
+      toggleToast('green', 'Task Created Successfully');
       dispatch(getTasks());
       payload.data = result.data;
       dispatch({ type: CREATE_TASK, payload: payload });
@@ -51,19 +51,12 @@ export const createTask = (title, description, deadline, toggleTaskCreatedToast)
     .catch(err => console.log(err));
 };
 
-export const editTask = (task, toggleSuccessToast) => async (dispatch, getState) => {
-  // const task = {
-  //   title: title,
-  //   description: description,
-  //   completed: false,
-  //   deadline: deadline,
-  // };
-  task.completed = false;
+export const editTask = (task, toggleToast) => async (dispatch, getState) => {
   const response = await axios
     .patch(`/api/tasks/${task.id}/`, task)
     .then(function(result) {
       const payload = { data: {} };
-      toggleSuccessToast();
+      toggleToast('green', 'Task Edited Successfully');
       dispatch(getTasks());
       payload.data = result.data;
       dispatch({ type: EDIT_TASK, payload: payload });

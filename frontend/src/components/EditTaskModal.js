@@ -53,7 +53,9 @@ const EditTaskModal = ({ show, handleClose, task, toggleToast, editTask }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return {};
+  var toggleToast = state.toggleToast;
+
+  return { toggleToast };
 };
 
 export default connect(mapStateToProps, { editTask })(EditTaskModal);

@@ -6,7 +6,6 @@ import { PencilSquare, XCircle, CheckCircle, SlashCircle } from 'react-bootstrap
 import { getTasks, deleteTask, completeTask } from '../actions/tasks';
 import { getTags } from '../actions/tags';
 import EditTaskModal from './EditTaskModal';
-import CustomToast from './CustomToast';
 import TagsContainer from './TagsContainer/TagsContainer';
 
 // For data loading into a component, its good to remember
@@ -15,12 +14,9 @@ import TagsContainer from './TagsContainer/TagsContainer';
 // Some reducer sees the actions, returns the data off the 'payload'
 // Since we generated a new state object, react-redux causes our React app to be rerendered
 
-const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, tags }) => {
+const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, toggleToast, tags }) => {
   const [toggleEditTaskModal, setToggleEditTaskModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState({});
-  var [toggleCustomToast, setToggleCustomToast] = useState(false);
-  var [headerMessage, setHeaderMessage] = useState('');
-  var [backgroundColor, setBackgroundColor] = useState('green');
   useEffect(() => {
     // This will be translated to store.dispatch(getTasks()) inside of redux.
     getTasks(toggleToast);
@@ -32,12 +28,6 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, tags }) 
     getTags(toggleToast);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const toggleToast = (backgroundColor, headerMessage) => {
-    setBackgroundColor(backgroundColor);
-    setHeaderMessage(headerMessage);
-    setToggleCustomToast(true);
-  };
 
   const openEditTaskModalWithTaskData = (task, setSelectedTask, setToggleEditTaskModal) => {
     setSelectedTask(task);
@@ -70,10 +60,7 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, tags }) 
         <td>{new Date(task.creation_date).toLocaleDateString()}</td>
         <td>{task.title}</td>
         <td>
-          <TagsContainer
-            taskTags={task.tags}
-            task={task}
-            toggleEditTaskToast={() => toggleToast('green', 'Task Edited Successfully')}></TagsContainer>
+          <TagsContainer taskTags={task.tags} task={task}></TagsContainer>
         </td>
         <td>{new Date(task.deadline).toLocaleDateString()}</td>
         <td>{String(task.completed)}</td>
@@ -86,13 +73,7 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, tags }) 
       <EditTaskModal
         show={toggleEditTaskModal}
         handleClose={() => setToggleEditTaskModal(false)}
-        task={selectedTask}
-        toggleToast={() => toggleToast('green', 'Task Edited Successfully')}></EditTaskModal>
-      <CustomToast
-        headerMessage={headerMessage}
-        show={toggleCustomToast}
-        handleClose={() => setToggleCustomToast(false)}
-        backgroundColor={backgroundColor}></CustomToast>
+        task={selectedTask}></EditTaskModal>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -114,10 +95,12 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, tags }) 
 // All of the redux store = all of the returns of the reducers
 const mapStateToProps = (state, ownProps) => {
   var tasks = []; // First time the reducer gets called, getTasks.data will be empty
+  var toggleToast = state.toggleToast;
   if (state.getTasks.data) {
     tasks = state.getTasks.data; // state.getTasks is called that way because the reducer is called getTasks in combineReducers
   }
-  return { tasks };
+
+  return { tasks, toggleToast };
 };
 
 // you give it a function to access data from the store and give it to the component
