@@ -9,8 +9,11 @@ import './TagsContainer.css';
 const TagsContainer = ({ getTags, createTag, editTask, taskTags, task, toggleToast, allTags }) => {
   var reactTags = React.createRef();
 
-  const tagInTagGroupByName = (tag, tagGroup) => {
-    return tagGroup.map(tagg => tagg.name).includes(tag.name);
+  const tagInTagGroupByName = tag => {
+    return tags
+      .concat(tagSuggestions)
+      .map(tagg => tagg.name)
+      .includes(tag.name);
   };
 
   const getAllTagSuggestions = () => {
@@ -36,21 +39,14 @@ const TagsContainer = ({ getTags, createTag, editTask, taskTags, task, toggleToa
   };
 
   var onAddition = tag => {
-    // This function always receives a tag from tagSuggestions, so it will try to create a new tag.
     console.log('HELLO!!');
-    console.log(tag);
+    console.log(tag); // THIS IS ONLY A NAME IN THE CASE OF NEW TAG.
     console.log(tags);
     var newTags = [].concat(tags, tag);
     task.tags = newTags;
     setTags(newTags);
     setTagSuggestions(tagSuggestions.filter(tagg => tagg.id != tag.id));
-    if (tagInTagGroupByName(tag, tags)) {
-      console.log('Editando task actual..');
-      editTask(task, toggleToast);
-    } else {
-      console.log('Creando nuevo tag..');
-      createTag(tag, task);
-    }
+    editTask(task, toggleToast);
   };
 
   return (

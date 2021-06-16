@@ -15,7 +15,7 @@ export const getTasks = toggleToast => async (dispatch, getState) => {
     })
     .catch(function(error) {
       toggleToast('red', 'There was an error getting the available tasks. See the console for details.');
-      console.log(error);
+      console.log(error.response.request.responseText);
     });
 };
 
@@ -27,7 +27,7 @@ export const sortTasks = orderingParameter => async (dispatch, getState) => {
       payload.data = result.data;
       dispatch({ type: GET_TASKS, payload: payload });
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err.response.request.responseText));
 };
 
 export const createTask = (title, description, deadline, toggleToast) => async (dispatch, getState) => {
@@ -48,10 +48,11 @@ export const createTask = (title, description, deadline, toggleToast) => async (
       payload.data = result.data;
       dispatch({ type: CREATE_TASK, payload: payload });
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err.response.request.responseText));
 };
 
 export const editTask = (task, toggleToast) => async (dispatch, getState) => {
+  console.log(task);
   const response = await axios
     .patch(`/api/tasks/${task.id}/`, task)
     .then(function(result) {
@@ -61,7 +62,7 @@ export const editTask = (task, toggleToast) => async (dispatch, getState) => {
       payload.data = result.data;
       dispatch({ type: EDIT_TASK, payload: payload });
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err.response.request.responseText));
 };
 
 export const deleteTask = (taskId, toggleToast) => async (dispatch, getState) => {
@@ -79,7 +80,10 @@ export const completeTask = (task, toggleToast, completedStatus) => async (dispa
   const editedTask = { completed: completedStatus };
   const toastMessage = completedStatus ? 'Task Completed Successfully' : 'Task is now Incomplete';
 
-  const response = await axios.patch(`/api/tasks/${task.id}/`, editedTask).catch(err => console.log(err));
+  const response = await axios
+    .patch(`/api/tasks/${task.id}/`, editedTask)
+    .catch(err => console.log(err.response.request.responseText));
+
   const payload = { data: {} };
   if (response.status === 200) {
     toggleToast('green', toastMessage);
