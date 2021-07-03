@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { PencilSquare, XCircle, CheckCircle, SlashCircle } from 'react-bootstrap-icons';
 
 import { getTasks, deleteTask, completeTask } from '../actions/tasks';
 import { getTags } from '../actions/tags';
 import EditTaskModal from './EditTaskModal';
 import TagsContainer from './TagsContainer/TagsContainer';
+import TasklistHeaders from './TasklistHeaders';
 
 // For data loading into a component, its good to remember
 // Call action creator from componentDidMount, and the creator inside runs the api request
@@ -17,6 +18,7 @@ import TagsContainer from './TagsContainer/TagsContainer';
 const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, toggleToast, tags }) => {
   const [toggleEditTaskModal, setToggleEditTaskModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState({});
+  var tagsRef = useRef(null);
   useEffect(() => {
     // This will be translated to store.dispatch(getTasks()) inside of redux.
     getTasks(toggleToast);
@@ -67,7 +69,6 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, toggleTo
       </tr>
     ));
   };
-
   return (
     <div>
       <EditTaskModal
@@ -75,16 +76,7 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, toggleTo
         handleClose={() => setToggleEditTaskModal(false)}
         task={selectedTask}></EditTaskModal>
       <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Actions</th>
-            <th>Created on</th>
-            <th>Title</th>
-            <th>Tags</th>
-            <th>Deadline</th>
-            <th>Completed</th>
-          </tr>
-        </thead>
+        <TasklistHeaders></TasklistHeaders>
         <tbody>{renderTasks(setSelectedTask, setToggleEditTaskModal, deleteTask, toggleToast, completeTask)}</tbody>
       </Table>
     </div>

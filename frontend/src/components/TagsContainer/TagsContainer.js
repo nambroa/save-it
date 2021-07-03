@@ -9,13 +9,6 @@ import './TagsContainer.css';
 const TagsContainer = ({ getTags, createTag, editTask, taskTags, task, toggleToast, allTags }) => {
   var reactTags = React.createRef();
 
-  const tagInTagGroupByName = tag => {
-    return tags
-      .concat(tagSuggestions)
-      .map(tagg => tagg.name)
-      .includes(tag.name);
-  };
-
   const getAllTagSuggestions = () => {
     if (allTags) {
       return allTags.filter(tag => !taskTags.map(tagg => tagg.id).includes(tag.id));
@@ -39,13 +32,10 @@ const TagsContainer = ({ getTags, createTag, editTask, taskTags, task, toggleToa
   };
 
   var onAddition = tag => {
-    console.log('HELLO!!');
-    console.log(tag); // THIS IS ONLY A NAME IN THE CASE OF NEW TAG.
-    console.log(tags);
     var newTags = [].concat(tags, tag);
     task.tags = newTags;
     setTags(newTags);
-    setTagSuggestions(tagSuggestions.filter(tagg => tagg.id != tag.id));
+    setTagSuggestions(tagSuggestions.filter(tagg => tagg.id !== tag.id));
     editTask(task, toggleToast);
   };
 

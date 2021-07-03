@@ -1,8 +1,11 @@
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import viewsets, filters, status
+from rest_framework import viewsets, status
+from rest_framework import filters as rest_framework_filters
+from django_filters import rest_framework as django_filters
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
+from .filters.task import TaskFilter
 from .models.tag import Tag
 from .models.task import Task
 from .serializers import TaskSerializer, TagSerializer
@@ -12,7 +15,8 @@ from .serializers import TaskSerializer, TagSerializer
 class TaskView(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
-    filter_backends = [filters.OrderingFilter]
+    filter_backends = [django_filters.DjangoFilterBackend, rest_framework_filters.OrderingFilter]
+    filterset_class = TaskFilter
     ordering_fields = ['title', 'completed', 'creation_date', 'deadline']
     ordering = ['deadline']
 
@@ -20,7 +24,7 @@ class TaskView(viewsets.ModelViewSet):
 class TagView(viewsets.ModelViewSet):
     serializer_class = TagSerializer
     queryset = Tag.objects.all()
-    filter_backends = [filters.OrderingFilter]
+    filter_backends = [rest_framework_filters.OrderingFilter]
     ordering_fields = ['name', 'color']
     ordering = ['name']
 

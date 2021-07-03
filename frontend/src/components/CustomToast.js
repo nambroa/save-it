@@ -8,20 +8,11 @@ const CustomToast = ({ sendToastToStore }) => {
   var [headerMessage, setHeaderMessage] = useState('');
   var [backgroundColor, setBackgroundColor] = useState('green');
   const toggleToast = (backgroundColor, headerMessage) => {
-    // debugger;
     setBackgroundColor(backgroundColor);
     setHeaderMessage(headerMessage);
     setToggleCustomToast(true);
   };
-  // This is done inside the useEffect function to prevent a rerender loop. Otherwise the case below happens"
-  // If a component takes this action from the redux store, and uses it, it will call toggleToast.
-  // ToggleToast uses setState, which triggers a rerender of the CustomToast component.
-  // The rerender without useEffect in place would then call sendToastToStore again. This
-  useEffect(() => {
-    sendToastToStore(toggleToast);
-  }, []);
-
-  console.log('rerendering customtoast');
+  sendToastToStore(toggleToast);
 
   return (
     <div>

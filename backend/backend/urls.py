@@ -20,7 +20,7 @@ from rest_framework import routers
 from save_it import views
 
 router = routers.DefaultRouter()
-router.register(r'tasks', views.TaskView, 'task')
+router.register(r'tasks', views.TaskView, 'task.py')
 router.register(r'tags', views.TagView, 'tag')
 
 

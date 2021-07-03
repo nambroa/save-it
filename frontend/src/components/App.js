@@ -10,15 +10,10 @@ import CustomToast from './CustomToast';
 
 const App = () => {
   const [toggleCreateTaskModal, setToggleCreateTaskModal] = useState(false);
-  var [toggleTaskCreatedToast, setToggleTaskCreatedToast] = useState(false);
   return (
     <div>
       <CustomToast></CustomToast>
-      <CreateTaskModal
-        show={toggleCreateTaskModal}
-        handleClose={() => setToggleCreateTaskModal(false)}
-        toggleTaskCreatedToast={() => setToggleTaskCreatedToast(true)}
-      />
+      <CreateTaskModal show={toggleCreateTaskModal} handleClose={() => setToggleCreateTaskModal(false)} />
       <div style={{ display: 'flex' }}>
         <Button size='lg' variant='success' onClick={() => setToggleCreateTaskModal(true)}>
           Create Task

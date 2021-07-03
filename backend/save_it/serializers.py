@@ -10,7 +10,7 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ('id', 'name')
-        # We drop the unique validation for the Tag's name, since without this we cannot append existing tags to a task
+        # We drop the unique validation for the Tag's name, since without this we cannot append existing tags to a task.py
         # Inside of a PATCH Task request. Instead, we do the unique name validation in the update and create method
         # for a Task. If the Tag's name already exists, we grab it from the DB, otherwise we create them.
         extra_kwargs = {'name': {'validators': []}, }
