@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { InputGroup, FormControl } from 'react-bootstrap';
 import { filterTasks } from '../actions/tasks/index';
 
-const EditableTableHeader = ({ headerName, fieldName, toggleToast, filterTasks }) => {
+const EditableDateTableHeader = ({ headerName, fieldName, toggleToast, filterTasks }) => {
   var headerRef = useRef(null);
   var [toggleEditableHeader, setToggleEditableHeader] = useState(false);
   var [filterValue, setFilterValue] = useState('');
@@ -62,4 +62,4 @@ const mapStateToProps = (state, ownProps) => {
   return { toggleToast };
 };
 
-export default connect(mapStateToProps, { filterTasks })(EditableTableHeader);
+export default connect(mapStateToProps, { filterTasks })(EditableDateTableHeader);

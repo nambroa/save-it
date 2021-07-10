@@ -10,8 +10,8 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ('id', 'name')
-        # We drop the unique validation for the Tag's name, since without this we cannot append existing tags to a task.py
-        # Inside of a PATCH Task request. Instead, we do the unique name validation in the update and create method
+        # We drop 'unique' validation for the Tag's name, since without this we cannot append existing tags to a task.py
+        # inside of a PATCH Task request. Instead, we do the unique name validation in the update and create method
         # for a Task. If the Tag's name already exists, we grab it from the DB, otherwise we create them.
         extra_kwargs = {'name': {'validators': []}, }
 
@@ -32,8 +32,22 @@ class TaskSerializer(WritableNestedModelSerializer):
         return task
 
     def update(self, instance, validated_data):
-        tags_data = validated_data.pop('tags')
-        self.add_tags_to(tags_data, instance)
+        if 'tags' in validated_data:
+            tags_data = validated_data.pop('tags')
+            self.add_tags_to(tags_data, instance)
+        if 'completed' in validated_data:
+            completed = validated_data.pop('completed')
+            instance.completed = completed
+        if 'title' in validated_data:
+            title = validated_data.pop('title')
+            instance.title = title
+        if 'description' in validated_data:
+            description = validated_data.pop('description')
+            instance.description = description
+        if 'deadline' in validated_data:
+            deadline = validated_data.pop('deadline')
+            instance.deadline = deadline
+        instance.save()
         return instance
 
     def add_tags_to(self, tags_data, task):

@@ -11,7 +11,7 @@ const TasklistHeaders = ({}) => {
         <EditableTableHeader headerName='Title' fieldName='title'></EditableTableHeader>
         <EditableTableHeader headerName='Tags' fieldName='tags'></EditableTableHeader>
         <th>Deadline</th>
-        <th>Completed</th>
+        <EditableTableHeader headerName='Completed' fieldName='completed'></EditableTableHeader>
       </tr>
     </thead>
   );

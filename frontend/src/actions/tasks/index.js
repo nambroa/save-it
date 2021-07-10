@@ -5,6 +5,25 @@ import { GET_TASKS, CREATE_TASK, EDIT_TASK, DELETE_TASK, FILTER_TASKS } from './
 // redux-thunk allows action creators to return functions as well, besides classic action objects.
 // the function that the action creator returns is called with dispatch and getstate as parameter
 
+export const filterTasks = (filterData, toggleToast) => async (dispatch, getState) => {
+  const filterField = filterData.field;
+  const filterValue = filterData.value;
+  var payload = {};
+  console.log('filtrando');
+  await axios
+    .get(`/api/tasks/?${filterField}=${filterValue}`)
+    .then(function(result) {
+      payload.data = result.data;
+      dispatch({ type: GET_TASKS, payload: payload });
+    })
+    .catch(function(error) {
+      if (typeof toggleToast === 'function') {
+        toggleToast('red', 'There was an error getting the available tasks. See the console for details.');
+      }
+      console.log(error.response.request.responseText);
+    });
+};
+
 export const getTasks = toggleToast => async (dispatch, getState) => {
   var payload = {};
   await axios
@@ -92,13 +111,4 @@ export const completeTask = (task, toggleToast, completedStatus) => async (dispa
     payload.data = response.data;
   }
   dispatch({ type: EDIT_TASK, payload: payload });
-};
-
-export const filterTasks = (filter, toggleToast) => async (dispatch, getState) => {
-  const filterField = filter.field;
-  const filterValue = filter.value;
-  if (filterField && filterValue) {
-    console.log(filterField);
-    console.log(filterValue);
-  }
 };
