@@ -1,5 +1,5 @@
 import { Toast } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import { sendToastToStore } from '../actions/toasts/index';
 

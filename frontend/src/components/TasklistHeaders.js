@@ -1,17 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import EditableTableHeader from './EditableTableHeader';
+import EditableDateTableHeader from './EditableDateTableHeader';
 
-const TasklistHeaders = ({}) => {
+const TasklistHeaders = () => {
   return (
     <thead>
       <tr>
         <th>Actions</th>
-        <th>Created on</th>
-        <EditableTableHeader headerName='Title' fieldName='title'></EditableTableHeader>
-        <EditableTableHeader headerName='Tags' fieldName='tags'></EditableTableHeader>
-        <th>Deadline</th>
-        <EditableTableHeader headerName='Completed' fieldName='completed'></EditableTableHeader>
+        <EditableDateTableHeader
+          headerName='Creation Date'
+          fieldName='creation_date'
+          fieldType='date'
+          filterDelay={900}></EditableDateTableHeader>
+        <EditableTableHeader
+          headerName='Title'
+          fieldName='title'
+          fieldType='string'
+          filterDelay={800}></EditableTableHeader>
+        <EditableTableHeader
+          headerName='Tags'
+          fieldName='tags'
+          fieldType='string'
+          filterDelay={800}></EditableTableHeader>
+        <EditableDateTableHeader
+          headerName='Deadline'
+          fieldName='deadline'
+          fieldType='date'
+          filterDelay={900}></EditableDateTableHeader>
+        <EditableTableHeader
+          headerName='Completed'
+          fieldName='completed'
+          fieldType='string'
+          filterDelay={800}></EditableTableHeader>
       </tr>
     </thead>
   );

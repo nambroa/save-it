@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { InputGroup, FormControl } from 'react-bootstrap';
 import { filterTasks } from '../actions/tasks/index';
 
-const EditableTableHeader = ({ headerName, fieldName, toggleToast, filterTasks }) => {
+const EditableTableHeader = ({ headerName, fieldName, fieldType, filterDelay, toggleToast, filterTasks }) => {
   var headerRef = useRef(null);
   var [toggleEditableHeader, setToggleEditableHeader] = useState(false);
   var [filterValue, setFilterValue] = useState('');
@@ -19,9 +19,12 @@ const EditableTableHeader = ({ headerName, fieldName, toggleToast, filterTasks }
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      filterTasks({ field: fieldName, value: filterValue }, toggleToast);
+      filterTasks({ [fieldName]: filterValue }, toggleToast);
+      if (filterValue) {
+        toggleToast('green', 'Task Filtered Successfully.');
+      }
       // Send Axios request here
-    }, 700);
+    }, filterDelay);
     // From React documentation
     // Why did we return a function from our effect? This is the optional cleanup mechanism for effects.
     // Every effect may return a function that cleans up after it.
@@ -47,6 +50,7 @@ const EditableTableHeader = ({ headerName, fieldName, toggleToast, filterTasks }
             style={{ width: 'fit-content' }}
             ref={headerRef}
             placeholder={headerName}
+            type={fieldType}
             onChange={e => setFilterValue(e.target.value)}></FormControl>
         </InputGroup>
         <div style={{ display: toggleEditableHeader ? 'none' : '' }} onClick={() => makeHeaderEditable()}>

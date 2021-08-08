@@ -1,10 +1,15 @@
-export const formatTask = (title = '', description = '', deadline = '', taskId = '', completed = false) => {
+export const formatTask = (title = '', description = '', deadline = '', taskId = '', completed = false, tags = '') => {
   const task = {
     title: title,
     description: description,
-    completed: false,
+    completed: completed,
     deadline: deadline,
-    id: taskId,
   };
+  if (taskId !== '') {
+    task.id = taskId;
+  }
+  if (tags !== '') {
+    task.tags = tags;
+  }
   return task;
 };

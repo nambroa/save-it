@@ -12,3 +12,5 @@ class TaskFilter(django_filters.FilterSet):
     description = django_filters.CharFilter(lookup_expr='icontains', field_name='description')
     completed = django_filters.BooleanFilter(field_name='completed')
     tags = CharInFilter(field_name='tags__name')
+    deadline = django_filters.DateFilter(field_name='deadline')
+    creation_date = django_filters.DateFilter(field_name='creation_date')

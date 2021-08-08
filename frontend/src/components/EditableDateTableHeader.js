@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { InputGroup, FormControl } from 'react-bootstrap';
 import { filterTasks } from '../actions/tasks/index';
 
-const EditableDateTableHeader = ({ headerName, fieldName, toggleToast, filterTasks }) => {
+const EditableDateTableHeader = ({ headerName, fieldName, toggleToast, filterDelay, filterTasks }) => {
   var headerRef = useRef(null);
   var [toggleEditableHeader, setToggleEditableHeader] = useState(false);
   var [filterValue, setFilterValue] = useState('');
@@ -13,15 +13,18 @@ const EditableDateTableHeader = ({ headerName, fieldName, toggleToast, filterTas
     headerRef.current.focus();
   };
 
-  useEffect(() => {
-    headerRef.current.focus();
-  }, [toggleEditableHeader]);
+  // useEffect(() => {
+  //   headerRef.current.focus();
+  // }, [toggleEditableHeader]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      filterTasks({ field: fieldName, value: filterValue }, toggleToast);
+      filterTasks({ [fieldName]: filterValue }, toggleToast);
+      if (filterValue) {
+        toggleToast('green', 'Task Filtered Successfully.');
+      }
       // Send Axios request here
-    }, 700);
+    }, filterDelay);
     // From React documentation
     // Why did we return a function from our effect? This is the optional cleanup mechanism for effects.
     // Every effect may return a function that cleans up after it.
@@ -46,7 +49,7 @@ const EditableDateTableHeader = ({ headerName, fieldName, toggleToast, filterTas
           <FormControl
             style={{ width: 'fit-content' }}
             ref={headerRef}
-            placeholder={headerName}
+            type='date'
             onChange={e => setFilterValue(e.target.value)}></FormControl>
         </InputGroup>
         <div style={{ display: toggleEditableHeader ? 'none' : '' }} onClick={() => makeHeaderEditable()}>

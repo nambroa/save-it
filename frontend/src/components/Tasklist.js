@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Table, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { PencilSquare, XCircle, CheckCircle, SlashCircle } from 'react-bootstrap-icons';
 
 import { getTasks, deleteTask, completeTask } from '../actions/tasks';
@@ -18,7 +18,6 @@ import TasklistHeaders from './TasklistHeaders';
 const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, toggleToast, tags }) => {
   const [toggleEditTaskModal, setToggleEditTaskModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState({});
-  var tagsRef = useRef(null);
   useEffect(() => {
     // This will be translated to store.dispatch(getTasks()) inside of redux.
     getTasks(toggleToast);
@@ -59,12 +58,12 @@ const Tasklist = ({ getTasks, deleteTask, completeTask, getTags, tasks, toggleTo
             <XCircle size={22}></XCircle>
           </Button>{' '}
         </td>
-        <td>{new Date(task.creation_date).toLocaleDateString()}</td>
+        <td>{task.creation_date}</td>
         <td>{task.title}</td>
         <td>
           <TagsContainer taskTags={task.tags} task={task}></TagsContainer>
         </td>
-        <td>{new Date(task.deadline).toLocaleDateString()}</td>
+        <td>{task.deadline}</td>
         <td>{String(task.completed)}</td>
       </tr>
     ));

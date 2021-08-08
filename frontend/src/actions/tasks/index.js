@@ -1,17 +1,19 @@
 import axios from 'axios';
 
-import { GET_TASKS, CREATE_TASK, EDIT_TASK, DELETE_TASK, FILTER_TASKS } from './actionTypes';
+import { GET_TASKS, CREATE_TASK, EDIT_TASK, DELETE_TASK } from './actionTypes';
 
 // redux-thunk allows action creators to return functions as well, besides classic action objects.
 // the function that the action creator returns is called with dispatch and getstate as parameter
 
 export const filterTasks = (filterData, toggleToast) => async (dispatch, getState) => {
-  const filterField = filterData.field;
-  const filterValue = filterData.value;
+  var url = `/api/tasks/?`;
+  Object.entries(filterData).map(([fieldName, fieldValue]) => {
+    url = url + fieldName + '=' + fieldValue + '&';
+    return url;
+  });
   var payload = {};
-  console.log('filtrando');
   await axios
-    .get(`/api/tasks/?${filterField}=${filterValue}`)
+    .get(url)
     .then(function(result) {
       payload.data = result.data;
       dispatch({ type: GET_TASKS, payload: payload });
