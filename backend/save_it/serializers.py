@@ -6,6 +6,8 @@ from save_it.models.tag import Tag
 from save_it.models.task import Task
 
 
+# Serializers validate and deserialize input in Views. They also serialize the output from them.
+
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
@@ -21,7 +23,7 @@ class TaskSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = Task
-        fields = ('id', 'title', 'description', 'completed', 'creation_date', 'deadline', 'tags')
+        fields = ('id', 'title', 'description', 'completed', 'creation_date', 'deadline', 'tags', 'user')
 
     def create(self, validated_data):
         tags_data = validated_data.pop('tags')

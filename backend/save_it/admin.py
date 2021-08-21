@@ -5,7 +5,7 @@ from save_it.models.task import Task
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('creation_date', 'title', 'description', 'completed', 'deadline')
+    list_display = ('creation_date', 'title', 'description', 'completed', 'deadline', 'user')
     filter_horizontal = ['tags']
 
 

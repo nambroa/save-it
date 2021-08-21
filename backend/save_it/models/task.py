@@ -10,6 +10,7 @@ class Task(models.Model):
     creation_date = models.DateField(auto_now_add=True)
     deadline = models.DateField()
     tags = models.ManyToManyField(Tag, related_name='tasks', blank=True)
+    user = models.EmailField(max_length=300)
 
     def __str__(self):
         return self.title
