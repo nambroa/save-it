@@ -14,3 +14,24 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_title(self):
+        return self.title
+
+    def get_description(self):
+        return self.description
+
+    def get_completed_status(self):
+        return self.completed
+
+    def get_creation_date(self):
+        return self.creation_date
+
+    def get_deadline(self):
+        return self.deadline
+
+    def get_tags(self):
+        return self.tags
+
+    def get_user(self):
+        return self.user

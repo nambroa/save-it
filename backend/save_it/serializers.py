@@ -53,6 +53,7 @@ class TaskSerializer(WritableNestedModelSerializer):
         return instance
 
     def add_tags_to(self, tags_data, task):
+        # If the Tag's name already exists, we grab it from the DB, otherwise we create them.
         for tag_data in tags_data:
             try:
                 tag = Tag.objects.get(name=tag_data.get('name'))
